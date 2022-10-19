@@ -9,9 +9,10 @@ class InferRequest(BaseModel):
     tweet: str
 
 
-@app.post('/infer', status_code=status.HTTP_200_OK)
+@app.post('/infer')
 def run_inference(infer_request: InferRequest):
     text = infer_request.tweet
+    print(text)
     prediction = inference(text)
     if prediction == 0:
         pred = "elon"
