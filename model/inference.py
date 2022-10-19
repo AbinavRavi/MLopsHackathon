@@ -4,6 +4,7 @@ from tqdm import tqdm
 
 import re
 import string
+import pickle
 
 import nltk
 from nltk.corpus import stopwords
@@ -78,12 +79,14 @@ tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
 tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
 
 clf = RandomForestClassifier()
-
 clf.fit(tfidf_train_vectors,y_train)
-
 y_pred = clf.predict(tfidf_test_vectors)
-print(classification_report(y_test,y_pred))
-print(accuracy_score(y_test, y_pred))
+
+#print(classification_report(y_test,y_pred))
+#print(accuracy_score(y_test, y_pred))
+
+# filename = 'clf_model.sav'
+# pickle.dump(clf, open(filename, 'wb'))
 
 # import pdb; pdb.set_trace()
 
