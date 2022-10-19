@@ -1,22 +1,19 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Feb 27 16:33:16 2021
-
-@author: praneeth
-"""
+from PIL import Image
 
 import streamlit as st
 import pandas as pd
+import requests
 
 import plotly.express as px
 
-
-
-
-
-st.title("Who tweeted this?")
-st.markdown("Elon or Kanye?")
+title_image = Image.open('./elon_and_kanye.jpeg')
+st.image(title_image, width=400)
+st.title("Who tweeted this: Elon or Kanye?")
+st.text("")
+st.text("")
+st.text("")
+# st.markdown("Elon or Kanye?")
 
 # @st.cache(persist=True)
 # def load_data():
@@ -24,52 +21,22 @@ st.markdown("Elon or Kanye?")
     # return(df)
 
 def run():
-    st.subheader("Iris Data Loaded into a Pandas Dataframe.")
+    # st.subheader("Iris Data Loaded into a Pandas Dataframe.")
+    # tweet = st.text_input('Input your tweet here')
+
+    if st.button('Check for new mystery tweet!'):
+        tweet_data = requests.post(f"https://newsreader-test2-nygqre3mjq-uc.a.run.app")
+        if tweet_data:
+            if tweet_data['result'] == 0:
+                image = Image.open('./elon.jpeg')
+            else:
+                image = Image.open('./kanye.jpg')
+
+            st.image(image, caption='This is our mystery tweeter.')
+            st.markdown(tweet_data[0], unsafe_allow_html=False)
     
-    # df = load_data()
     
     disp_head = st.sidebar.radio('Select DataFrame Display Option:',('Head', 'All'),index=0)
-   
-    
-   
-    #Multi-Select
-    #sel_plot_cols = st.sidebar.multiselect("Select Columns For Scatter Plot",df.columns.to_list()[0:4],df.columns.to_list()[0:2])
-    
-    #Select Box
-    #x_plot = st.sidebar.selectbox("Select X-axis Column For Scatter Plot",df.columns.to_list()[0:4],index=0)
-    #y_plot = st.sidebar.selectbox("Select Y-axis Column For Scatter Plot",df.columns.to_list()[0:4],index=1)
-    
-    
-    if disp_head=="Head":
-        st.dataframe(df.head())
-    else:
-        st.dataframe(df)
-    #st.table(df)
-    #st.write(df)
-    
-    
-    #Scatter Plot
-    fig = px.scatter(df, x=df["sepallength"], y=df["sepalwidth"], color="class",
-                 size='petallength', hover_data=['petalwidth'])
-    
-    fig.update_layout({
-                'plot_bgcolor': 'rgba(0, 0, 0, 0)'})
-    
-    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
-    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
-   
-    st.write("\n")
-    st.subheader("Scatter Plot")
-    st.plotly_chart(fig, use_container_width=True)
-    
-    
-    #Add images
-    #images = ["<image_url>"]
-    #st.image(images, width=600,use_container_width=True, caption=["Iris Flower"])
-   
-    
-   
-    
    
 if __name__ == '__main__':
     run()    
