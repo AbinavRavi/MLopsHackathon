@@ -3,7 +3,6 @@ import joblib
 import pickle
 import numpy as np
 from train import clean_text
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 def inference(tweet: str):
     preprocessed_text = clean_text(tweet)
