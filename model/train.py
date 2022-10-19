@@ -6,12 +6,14 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
+import joblib
+import pickle
 
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
+
 def clean_text(text):
-    
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
     sw = stopwords.words('english')
     lemmatizer = WordNetLemmatizer() 
     text = text.lower()
@@ -49,27 +51,30 @@ def get_label(text):
     text = labels[text.split('/')[1]]
     return text
 
+def train():
+    df = pd.read_csv('kanye_elon_1900.csv')
+    df['text'] = df['text'].apply(lambda x: clean_text(x))
+    df['target'] = df['source'].apply(lambda x: get_label(x))
+    print(df.target.unique())
 
-df = pd.read_csv('kanye_elon_1900.csv')
-df['text'] = df['text'].apply(lambda x: clean_text(x))
-df['target'] = df['source'].apply(lambda x: get_label(x))
-print(df.target.unique())
+    print(df.shape)
+    print(df.columns)
 
-print(df.shape)
-print(df.columns)
+    X_train, X_test , y_train, y_test = train_test_split(df['text'].values,df['target'].values, 
+                                                        test_size=0.2, random_state=123, 
+                                                        stratify=df['target'].values
+                                        )
 
-X_train, X_test , y_train, y_test = train_test_split(df['text'].values,df['target'].values, 
-                                                     test_size=0.2, random_state=123, 
-                                                     stratify=df['target'].values
-                                    )
+    print(X_train)
+    tfidf_vectorizer = TfidfVectorizer() 
+    tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
+    pickle.dump(tfidf_train_vectors,open("tfidf.pickle","wb"))
+    tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
 
-tfidf_vectorizer = TfidfVectorizer() 
-tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
-tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
-
-clf = RandomForestClassifier()
-clf.fit(tfidf_train_vectors,y_train)
-y_pred = clf.predict(tfidf_test_vectors)
+    clf = RandomForestClassifier()
+    clf.fit(tfidf_train_vectors,y_train)
+    y_pred = clf.predict(tfidf_test_vectors)
+    joblib.dump(clf,"model.joblib")
 
 #print(classification_report(y_test,y_pred))
 #print(accuracy_score(y_test, y_pred))
@@ -83,3 +88,5 @@ y_pred = clf.predict(tfidf_test_vectors)
 # test = np.array(" let's go to Mars").reshape(-1)
 # test_vec = tfidf_vectorizer.transform(test)
 # print(clf.predict(test_vec))
+if __name__ == "__main__":
+    train()
