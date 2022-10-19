@@ -68,7 +68,8 @@ def train():
     print(X_train)
     tfidf_vectorizer = TfidfVectorizer() 
     tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
-    pickle.dump(tfidf_train_vectors,open("tfidf.pickle","wb"))
+    # print(tfidf_vectorizer.vocabulary_)
+    pickle.dump(tfidf_vectorizer,open("tfidf.pickle","wb"))
     tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
 
     clf = RandomForestClassifier()
