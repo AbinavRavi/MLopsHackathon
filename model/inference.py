@@ -5,9 +5,8 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer  
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, accuracy_score
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -70,12 +69,14 @@ tfidf_train_vectors = tfidf_vectorizer.fit_transform(X_train)
 tfidf_test_vectors = tfidf_vectorizer.transform(X_test)
 
 clf = RandomForestClassifier()
-
 clf.fit(tfidf_train_vectors,y_train)
-
 y_pred = clf.predict(tfidf_test_vectors)
-print(classification_report(y_test,y_pred))
-print(accuracy_score(y_test, y_pred))
+
+#print(classification_report(y_test,y_pred))
+#print(accuracy_score(y_test, y_pred))
+
+# filename = 'clf_model.sav'
+# pickle.dump(clf, open(filename, 'wb'))
 
 # import pdb; pdb.set_trace()
 
@@ -87,3 +88,4 @@ print(accuracy_score(y_test, y_pred))
 def inference(tweet: str):
     pre_processed_text = clean_text(tweet)
     
+
