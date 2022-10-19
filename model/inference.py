@@ -1,21 +1,13 @@
-import numpy as np
+
 import pandas as pd
-from tqdm import tqdm
-
 import re
-import string
-
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer  
-
-
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix,classification_report, accuracy_score
-import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.metrics import classification_report, accuracy_score
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -92,3 +84,6 @@ print(accuracy_score(y_test, y_pred))
 # test_vec = tfidf_vectorizer.transform(test)
 # print(clf.predict(test_vec))
 
+def inference(tweet: str):
+    pre_processed_text = clean_text(tweet)
+    
