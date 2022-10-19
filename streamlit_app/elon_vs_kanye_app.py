@@ -27,16 +27,17 @@ def run():
     if st.button('Check for new mystery tweet!'):
         tweet_data = requests.post(f"https://newsreader-test2-nygqre3mjq-uc.a.run.app")
         if tweet_data:
-            if tweet_data['result'] == 0:
+            if tweet_data['prediction'] == "elon":
                 image = Image.open('./elon.jpeg')
             else:
                 image = Image.open('./kanye.jpg')
 
-            st.image(image, caption='This is our mystery tweeter.')
-            st.markdown(tweet_data[0], unsafe_allow_html=False)
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.markdown(tweet_data['tweet'], unsafe_allow_html=False)
+            with col2:
+                st.image(image, caption='This is our mystery tweeter.')
     
-    
-    disp_head = st.sidebar.radio('Select DataFrame Display Option:',('Head', 'All'),index=0)
-   
 if __name__ == '__main__':
     run()    
