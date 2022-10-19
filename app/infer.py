@@ -8,4 +8,4 @@ app = FastAPI()
 @app.get('/', status_code=status.HTTP_200_OK)
 def run_inference(req: str):
     prediction = inference(req)
-    return prediction
+    return req, prediction

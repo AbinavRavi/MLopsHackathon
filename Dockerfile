@@ -1,8 +1,11 @@
 FROM "python:3.9.9-slim-buster"
 
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+COPY pyproject.toml ./
+RUN pip install poetry
+RUN poetry install
 COPY . .
 
-CMD uvicorn run_main:app --host 0.0.0.0 --port 8080
+
+
+CMD uvicorn app.infer:app --host 0.0.0.0 --port 8080
