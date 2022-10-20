@@ -3,6 +3,7 @@ from PIL import Image
 
 import streamlit as st
 import requests
+import time
 
 title_image = Image.open('./elon_and_kanye.jpeg')
 st.image(title_image, width=400)
@@ -40,27 +41,29 @@ def run():
 
         tweet_data = requests.post("https://newsreader-test2-nygqre3mjq-uc.a.run.app/twitter", headers=header, json=data)
 
-        print(tweet_data)
 
-        tweet_data_fake = {
-                'prediction': 'elon',
-                'tweet': 'Doge to the moon!'
-                }
+def inference():
+    tweet_data_fake = {
+            'prediction': 'elon',
+            'tweet': 'Doge to the moon!'
+            }
 
-        if tweet_data_fake:
-            if tweet_data_fake['prediction'] == "elon":
-                image = Image.open('./elon.jpeg')
-            else:
-                image = Image.open('./kanye.jpg')
+    if tweet_data_fake:
+        if tweet_data_fake['prediction'] == "elon":
+            image = Image.open('./elon.jpeg')
+        else:
+            image = Image.open('./kanye.jpg')
 
-            # col1, col2 = st.columns(2)
+        # col1, col2 = st.columns(2)
 
-            # with col1:
-                # st.markdown(tweet_data_fake['tweet'], unsafe_allow_html=False)
-            # with col2:
-                # st.image(image, caption='This is our mystery tweeter.')
-            st.markdown(tweet_data_fake['tweet'], unsafe_allow_html=False)
-            st.image(image, caption='This is our mystery tweeter.')
+        # with col1:
+            # st.markdown(tweet_data_fake['tweet'], unsafe_allow_html=False)
+        # with col2:
+            # st.image(image, caption='This is our mystery tweeter.')
+        st.markdown(tweet_data_fake['tweet'], unsafe_allow_html=False)
+        st.image(image, caption='This is our mystery tweeter.')
 
 if __name__ == '__main__':
-    run()    
+    run()
+    time.sleep(30)
+    inference()
