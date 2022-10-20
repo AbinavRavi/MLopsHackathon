@@ -2,6 +2,8 @@
 from fastapi import FastAPI, status, Request
 from pydantic import BaseModel
 from model.inference import inference
+import requests
+import os
 
 app = FastAPI()
 
@@ -18,8 +20,10 @@ def run_inference(infer_request: InferRequest):
         pred = "elon"
     else:
         pred = "kanye"
-    response = {
+    next_request = {
         "tweet" : text,
         "prediction" : pred
     }
+    headers = {"Content-Type":"application/json"}
+    response = requests.post(os.getenv("streamlit"), headers=headers, data=next_request)
     return response
