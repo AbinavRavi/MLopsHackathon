@@ -2,8 +2,6 @@
 from PIL import Image
 import streamlit as st
 import requests
-from fastapi import FastAPI
-from pydantic import BaseModel
 
 title_image = Image.open('./elon_and_kanye.jpeg')
 st.image(title_image, width=400)
