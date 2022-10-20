@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
-
 import streamlit as st
 import requests
-import time
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 title_image = Image.open('./elon_and_kanye.jpeg')
 st.image(title_image, width=400)
@@ -65,5 +65,4 @@ def inference():
 
 if __name__ == '__main__':
     run()
-    time.sleep(30)
     inference()
