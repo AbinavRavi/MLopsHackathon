@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, status, Request
+from fastapi import FastAPI
 from pydantic import BaseModel
 from model.inference import inference
 import requests
