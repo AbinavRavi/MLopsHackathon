@@ -24,7 +24,7 @@ def run():
     tweeter_handle = st.text_input('Input username of myster twitter user here.')
     if st.button('Check for new mystery tweet!'):
 
-        bearer_token = "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlMWI5Zjg4Y2ZlMzE1MWRkZDI4NGE2MWJmOGNlY2Y2NTliMTMwY2YiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjMyNTU1OTQwNTU5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE3NTIyNTg5NTk0ODU2NDU4NjE5IiwiZW1haWwiOiJmbG9rZGVAZ29vZ2xlbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IldfOVEteFFOZzhubFFJeWtHMkdranciLCJpYXQiOjE2NjYyNTA1ODQsImV4cCI6MTY2NjI1NDE4NH0.jOBe99ESgM9xpTfkly7u4EiP2cnCFBSrL3yZGNzkeqI0bplA6CQc1B0VHVfy4EpRpxfZ905QCnHsO6K6QW32H21BWMnsRsVLR9KmJ8Z5oldaLDqw-AvpccK16NWMg5Fm2Yq40LKbbsBvIa02EKZfpZimR_k8NaVULVv5hCFSakLJxGFlF-9j0pyTgfmQDgUlJzVQxZiv96lr2RTbcs5zz91D89vePORNYwnknaoRxJmX64jUmSpo3jtWMGSqXLeK5AzBaf4DYG3-zZzgVnjRZYzVtQvxW95IsmdkEKDK29wLiWFF_1KPKhhxXtZYDaArkdNus8kWDyGkuuhA42ggDA"
+        bearer_token = "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlMWI5Zjg4Y2ZlMzE1MWRkZDI4NGE2MWJmOGNlY2Y2NTliMTMwY2YiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjMyNTU1OTQwNTU5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE3NTIyNTg5NTk0ODU2NDU4NjE5IiwiZW1haWwiOiJmbG9rZGVAZ29vZ2xlbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InhQSUplTEM1UmN3RFZlVGg2SGhCX2ciLCJpYXQiOjE2NjYyNTYzODYsImV4cCI6MTY2NjI1OTk4Nn0.pLpAoND9sz8naMpHmoMXM1yiSvVw1PpnN7zhMv184G1ah3OhZv_H1N1rMLYFKh6X7ux_9yc1MkAV2Z3icjjI9G4nPg5Xleij3Jb07weVDppwFSwUt95YgoYNTfSJ4lELhuamTrq6rLIu66Kvi7HRjMctEFrnyY74w7CrFUBpgCZquH-4Ssd4pgqXsW_UJE748Z-5Kc7kvlF3Thwt9ek5vc_iyKuSzDYQhNjwIu5J4NjXiIE7HGTfzXfhrLM4jfIP3NTH8ttelC65F3fdIrLNxRxqmJC4NW9GAZa2hcDAI5pPuq_JwVBkXFFHzrsEqpyRmBOiYOpnpA-ZY0AJV2J1Gw"
 
         header = {
                 'Authorization': bearer_token,
@@ -33,12 +33,13 @@ def run():
         
         data = {
                 'accounts': [tweeter_handle],
-                'dest': 'live_elon_kanye1.tweets3',
+                'dest': 'live_elon_kanye1.tweets7',
                 'limits': 5,
                 }
 
         tweet_data = requests.post("https://newsreader-test2-nygqre3mjq-uc.a.run.app/twitter", headers=header, json=data)
 
+        print(tweet_data)
 
         tweet_data_fake = {
                 'prediction': 'elon',
